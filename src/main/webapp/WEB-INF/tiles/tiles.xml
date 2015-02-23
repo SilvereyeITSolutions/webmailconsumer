@@ -49,6 +49,11 @@
         <put-attribute name="body" value="/WEB-INF/view/jsp/compose.jsp" />
     </definition>
     
+    <definition name="editEventPopup" extends="indexTemplate">
+        <put-attribute name="title" value="Compose | Silvereye Unifiedmail Server" />
+        <put-attribute name="body" value="/WEB-INF/view/jsp/editeventpop-up.jsp" />
+    </definition>
+    
      <definition name="mycalendar" extends="indexTemplate">
         <put-attribute name="title" value="Compose | Silvereye Unifiedmail Server" />
         <put-attribute name="body" value="/WEB-INF/view/jsp/mycalendar.jsp" />

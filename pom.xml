@@ -14,6 +14,19 @@
 	</properties>
 
 	<dependencies>
+	<dependency> 
+    <groupId>javax.json</groupId> 
+    <artifactId>javax.json-api</artifactId> 
+    <version>1.0</version> 
+</dependency> 
+<dependency>
+	<groupId>org.glassfish</groupId>
+	<artifactId>javax.json</artifactId>
+	<version>1.0-b02</version>
+</dependency>
+
+
+
 		<dependency>
 			<groupId>wsdl4j</groupId>
 			<artifactId>wsdl4j</artifactId> 
@@ -400,6 +413,31 @@
 		<!-- Smack Chat dependencies end -->
 
 
+		<dependency>
+			<groupId>org.scala-lang</groupId>
+			<artifactId>scala-library</artifactId>
+			<version>2.10.4</version>
+		</dependency>
+		<dependency>
+			<groupId>org.neo4j</groupId>
+			<artifactId>neo4j-cypher-compiler-2.1</artifactId>
+			<version>2.1.2</version>
+		</dependency>
+		<dependency>
+			<groupId>net.wimpi</groupId>
+			<artifactId>telnetd-x</artifactId>
+			<version>2.1.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.groovy</groupId>
+			<artifactId>groovy-json</artifactId>
+			<version>2.3.3</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.cassandra</groupId>
+			<artifactId>cassandra-thrift</artifactId>
+			<version>2.0.6</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
@@ -419,46 +457,52 @@
 					<schemaLanguage>WSDL</schemaLanguage>
 					<generatePackage>webmail.wsdl</generatePackage>
 					<forceRegenerate>true</forceRegenerate>
-					<schemas>
+					<schemas> 
+						<schema>  
+							<url>http://192.168.1.194:8080/ws/webmailFolder.wsdl</url> 
+						</schema> 
 						<schema>
-							<url>http://localhost:8080/ws/webmailFolder.wsdl</url> 
+							<url>http://192.168.1.194:8080/ws/webmailQuota.wsdl</url>   
 						</schema>
 						<schema>
-							<url>http://localhost:8080/ws/webmailQuota.wsdl</url>   
+							<url>http://192.168.1.194:8080/ws/webmailAuthentication.wsdl</url>  
 						</schema>
 						<schema>
-							<url>http://localhost:8080/ws/webmailAuthentication.wsdl</url>  
+							<url>http://192.168.1.194:8080/ws/webmailImapquota.wsdl</url> 
 						</schema>
 						<schema>
-							<url>http://localhost:8080/ws/webmailImapquota.wsdl</url> 
+							<url>http://192.168.1.194:8080/ws/webmailEmailcount.wsdl</url>   
 						</schema>
 						<schema>
-							<url>http://localhost:8080/ws/webmailEmailcount.wsdl</url>   
+							<url>http://192.168.1.194:8080/ws/webmailInbox.wsdl</url> 
 						</schema>
 						<schema>
-							<url>http://localhost:8080/ws/webmailInbox.wsdl</url> 
+							<url>http://192.168.1.194:8080/ws/webmailMoveTrash.wsdl</url> 
 						</schema>
 						<schema>
-							<url>http://localhost:8080/ws/webmailMoveTrash.wsdl</url> 
-						</schema>
-						<schema>
-							<url>http://localhost:8080/ws/webmailFlagAction.wsdl</url> 
+							<url>http://192.168.1.194:8080/ws/webmailFlagAction.wsdl</url> 
 						</schema>
 						<schema> 
-							<url>http://localhost:8080/ws/webmailSeenAction.wsdl</url>  
+							<url>http://192.168.1.194:8080/ws/webmailSeenAction.wsdl</url>  
 						</schema>
 						<schema> 
-							<url>http://localhost:8080/ws/webmailContentDisplay.wsdl</url>    
+							<url>http://192.168.1.194:8080/ws/webmailContentDisplay.wsdl</url>    
 						</schema> 
 						<schema> 
-							<url>http://localhost:8080/ws/webmailAttachmentDownload.wsdl</url>    
+							<url>http://192.168.1.194:8080/ws/webmailAttachmentDownload.wsdl</url>    
 						</schema> 
 						<schema> 
-							<url>http://localhost:8080/ws/webmailCompose.wsdl</url>      
+							<url>http://192.168.1.194:8080/ws/webmailCompose.wsdl</url>      
 						</schema> 
 						<schema> 
-							<url>http://localhost:8080/ws/webmailLDAPAtt.wsdl</url>     
+							<url>http://192.168.1.194:8080/ws/webmailLDAPAtt.wsdl</url>     
 						</schema> 
+						<schema>
+							<url>http://localhost:8080/ws/calendar.wsdl</url> 
+						</schema>
+						<schema>
+							<url>http://192.168.1.192:8080/ws/documentModule.wsdl</url>
+						</schema>
 					</schemas>
 				</configuration>
 			</plugin>

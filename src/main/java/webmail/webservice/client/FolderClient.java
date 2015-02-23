@@ -59,7 +59,7 @@ public class FolderClient extends WebServiceGatewaySupport {
 		GetWebmailFolderResponse response =(GetWebmailFolderResponse) getWebServiceTemplate().marshalSendAndReceive(
 				request,
 				new SoapActionCallback(
-						"http://localhost:8080/ws/GetWebmailFolderRequest"));
+						"http://192.168.1.194:8080/ws/GetWebmailFolderRequest"));
 		
 		return response;
 		
@@ -76,7 +76,7 @@ public class FolderClient extends WebServiceGatewaySupport {
 		
 		GetWebmailSubFolderResponse response=(GetWebmailSubFolderResponse) getWebServiceTemplate().marshalSendAndReceive(
 				request,
-				new SoapActionCallback("http://localhost:8080/ws/GetWebmailSubFolderRequest"));
+				new SoapActionCallback("http://192.168.1.194:8080/ws/GetWebmailSubFolderRequest"));
 		
 		return response;
 		
@@ -93,7 +93,7 @@ public class FolderClient extends WebServiceGatewaySupport {
 		
 		GetWebmailAuthResponse response =(GetWebmailAuthResponse) getWebServiceTemplate().marshalSendAndReceive(
 				request,
-				new SoapActionCallback("http://localhost:8080/ws/GetWebmailAuthRequest"));
+				new SoapActionCallback("http://192.168.1.194:8080/ws/GetWebmailAuthRequest"));
 		
 		return response;
 		
@@ -109,7 +109,7 @@ public class FolderClient extends WebServiceGatewaySupport {
 		
 		GetWebmailImapquotaResponse response =(GetWebmailImapquotaResponse) getWebServiceTemplate().marshalSendAndReceive(
 				request,
-				new SoapActionCallback("http://localhost:8080/ws/GetWebmailImapquotaRequest"));
+				new SoapActionCallback("http://192.168.1.194:8080/ws/GetWebmailImapquotaRequest"));
 		
 		return response;
 		
@@ -126,7 +126,7 @@ public class FolderClient extends WebServiceGatewaySupport {
 		request.setWebamilFolder(folder);
 		GetWebmailUnreadMailCountResponse response =(GetWebmailUnreadMailCountResponse) getWebServiceTemplate().marshalSendAndReceive(
 				request,
-				new SoapActionCallback("http://localhost:8080/ws/GetWebmailUnreadMailCountRequest"));
+				new SoapActionCallback("http://192.168.1.194:8080/ws/GetWebmailUnreadMailCountRequest"));
 		
 		return response;
 		
@@ -143,7 +143,7 @@ public class FolderClient extends WebServiceGatewaySupport {
 		request.setWebamilFolder(folder);
 		GetWebmailAllMailCountResponse response =(GetWebmailAllMailCountResponse) getWebServiceTemplate().marshalSendAndReceive(
 				request,
-				new SoapActionCallback("http://localhost:8080/ws/GetWebmailAllMailCountRequest"));
+				new SoapActionCallback("http://192.168.1.194:8080/ws/GetWebmailAllMailCountRequest"));
 		
 		return response;
 		
@@ -164,7 +164,7 @@ public class FolderClient extends WebServiceGatewaySupport {
 		request.setWebamilFolder(folder);
 		GetMailInboxResponse response =(GetMailInboxResponse) getWebServiceTemplate().marshalSendAndReceive(
 				request,
-				new SoapActionCallback("http://localhost:8080/ws/GetInboxMailRequest"));
+				new SoapActionCallback("http://192.168.1.194:8080/ws/GetInboxMailRequest"));
 		
 		return response;
 		
@@ -183,7 +183,7 @@ public class FolderClient extends WebServiceGatewaySupport {
 		request.setWebamilFolder(folder);
 		GetMailInboxDescResponse response =(GetMailInboxDescResponse) getWebServiceTemplate().marshalSendAndReceive(
 				request,
-				new SoapActionCallback("http://localhost:8080/ws/GetInboxMailDescRequest"));
+				new SoapActionCallback("http://192.168.1.194:8080/ws/GetInboxMailDescRequest"));
 		
 		return response;
 		
@@ -203,7 +203,7 @@ public class FolderClient extends WebServiceGatewaySupport {
 		
 		SetWebmailFlagResponse response =(SetWebmailFlagResponse) getWebServiceTemplate().marshalSendAndReceive(
 				request,
-				new SoapActionCallback("http://localhost:8080/ws/SetWebmailFlageRequest"));
+				new SoapActionCallback("http://192.168.1.194:8080/ws/SetWebmailFlageRequest"));
 		
 		return response;
 		
@@ -222,7 +222,7 @@ public class FolderClient extends WebServiceGatewaySupport {
 		
 		RemoveWebmailFlagResponse response =(RemoveWebmailFlagResponse) getWebServiceTemplate().marshalSendAndReceive(
 				request,
-				new SoapActionCallback("http://localhost:8080/ws/RemoveWebmailFlagRequest"));
+				new SoapActionCallback("http://192.168.1.194:8080/ws/RemoveWebmailFlagRequest"));
 		
 		return response;
 		
@@ -242,7 +242,7 @@ public class FolderClient extends WebServiceGatewaySupport {
 		
 		SetWebmailSeenResponse response =(SetWebmailSeenResponse) getWebServiceTemplate().marshalSendAndReceive(
 				request,
-				new SoapActionCallback("http://localhost:8080/ws/SetWebmailSeenRequest"));
+				new SoapActionCallback("http://192.168.1.194:8080/ws/SetWebmailSeenRequest"));
 		
 		return response;
 		
@@ -262,7 +262,7 @@ public class FolderClient extends WebServiceGatewaySupport {
 		
 		SetWebmailUnSeenResponse response =(SetWebmailUnSeenResponse) getWebServiceTemplate().marshalSendAndReceive(
 				request,
-				new SoapActionCallback("http://localhost:8080/ws/SetWebmailUnSeenRequest"));
+				new SoapActionCallback("http://192.168.1.194:8080/ws/SetWebmailUnSeenRequest"));
 		
 		return response;
 		
@@ -285,7 +285,7 @@ public class FolderClient extends WebServiceGatewaySupport {
 		
 		GetWebmailMoveTrashResponse response =(GetWebmailMoveTrashResponse) getWebServiceTemplate().marshalSendAndReceive(
 				request,
-				new SoapActionCallback("http://localhost:8080/ws/GetWebmailMoveTrashRequest"));
+				new SoapActionCallback("http://192.168.1.194:8080/ws/GetWebmailMoveTrashRequest"));
 		
 		return response;
 		
@@ -303,7 +303,7 @@ public class FolderClient extends WebServiceGatewaySupport {
 		
 		GetMailDisplayResponse response =(GetMailDisplayResponse) getWebServiceTemplate().marshalSendAndReceive(
 				request,
-				new SoapActionCallback("http://localhost:8080/ws/GetMailDisplayRequest"));
+				new SoapActionCallback("http://192.168.1.194:8080/ws/GetMailDisplayRequest"));
 		
 		return response;
 		
@@ -324,7 +324,7 @@ public class FolderClient extends WebServiceGatewaySupport {
 		
 		GetMailAttachDownloadResponse response =(GetMailAttachDownloadResponse) getWebServiceTemplate().marshalSendAndReceive(
 				request,
-				new SoapActionCallback("http://localhost:8080/ws/GetMailDisplayRequest"));
+				new SoapActionCallback("http://192.168.1.194:8080/ws/GetMailDisplayRequest"));
 		
 		return response;
 		
@@ -351,7 +351,7 @@ public class FolderClient extends WebServiceGatewaySupport {
 		
 		GetComposeMailResponse response =(GetComposeMailResponse) getWebServiceTemplate().marshalSendAndReceive(
 				request,
-				new SoapActionCallback("http://localhost:8080/ws/GetComposeMailRequest"));
+				new SoapActionCallback("http://192.168.1.194:8080/ws/GetComposeMailRequest"));
 		
 		return response;
 		
@@ -369,7 +369,7 @@ public class FolderClient extends WebServiceGatewaySupport {
 		
 		GetLdapFNameResponse response =(GetLdapFNameResponse) getWebServiceTemplate().marshalSendAndReceive(
 				request,
-				new SoapActionCallback("http://localhost:8080/ws/GetLdapFNameRequest"));
+				new SoapActionCallback("http://192.168.1.194:8080/ws/GetLdapFNameRequest"));
 		
 		return response;
 		

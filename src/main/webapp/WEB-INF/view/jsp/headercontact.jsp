@@ -190,7 +190,7 @@
 <link href='css/fullcalendar.print.css' rel='stylesheet' media='print' />
 <script src='js/moment.min.js'></script> 
 <!--<script src='../lib/jquery.min.js'></script>---> 
-<script src='js/fullcalendar.min.js'></script>
+<script src='js/fullcalendar.js'></script>
 <!-----------/// COLOR PICKER STRED HERE ----------->
     <link rel="stylesheet" type="text/css" href="color_picker/spectrum.css">
     <script type="text/javascript" src="color_picker/spectrum.js"></script>

@@ -1,25 +1,31 @@
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="webmail.wsdl.File"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="webmail.wsdl.EventBean"%>
+<%@page import="java.util.List"%>
+<%@page import="webmail.wsdl.EventArray"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <html>
 <head>
-</head>
-<body>
+  </head>
+<body onload="getclaendarlist()">
 <div class="right-pane"> 
     
     <!-----------------------------/// Main Cointer Stared here --------------->
     <div id="widget" > 
       
       <!-------/// CALENDER TOP THREE OPTION ----------->
-      <div class="top_three_calender"> 
+ <div class="top_three_calender"> 
         
         <!---/// FIRST CALENDER ------>
         <div class="first_cal_option"><div class="create_cal_icon"></div> Create Calender </div>
         <!------/// FIRST CALENDER END HERE --------> 
         <!---/// SECOND CALENDER ------>
-        <div class="first_cal_option_1"><div class="create_cal_icon_1"></div>Create Task</div>
+        <div class="first_cal_option_1 hide_this"><div class="create_cal_icon_1"></div>Create Task</div>
         <!------/// SECOND CALENDER END HERE --------> 
         <!---/// THIRD CALENDER ------>
-        <div class="first_cal_option_2"><div class="create_cal_icon_2"></div>Create Event</div>
+        <div class="first_cal_option_2 create_event"><div class="create_cal_icon_2"></div>Create Event</div>
         <!------/// THIRD CALENDER END HERE --------> 
         
       </div>
@@ -572,8 +578,7 @@
 
 <script>
             $(document).ready(function() {
-		
-		$('#calendar').fullCalendar({
+            $('#calendar').fullCalendar({
 			header: {
 				left: 'prev,next today',
 				center: 'title',
@@ -595,13 +600,13 @@
 					
 			}
 				
-				$('.save_cal').click(function(){
+				 $('.save_cal').click(function(){
 					
 				     var input_value = $('.summary').val();
 					//alert(input_value);
 					
 					});
-				
+				 
 				/// ********************** ///
 				///     NOTE  stred here  ///
 				/// ******************** ///
@@ -640,13 +645,80 @@
 			},
 			editable: true,
 			eventLimit: true, // allow "more" link when too many events
+			
+			
 			events: [
-				{
-					title: 'All Day Event',
-					start: '2014-11-01'
-				},
-				{
-					title: 'Long Event',
+			         <% 
+			         List <EventBean> eventarray=(List <EventBean>)request.getAttribute("eventlist");
+			         for(EventBean e:eventarray)
+			         {  			       		   
+			        	String [] startdatetimelist=e.getStartdate().split("T");
+			        	String startdate=startdatetimelist[0];
+			        	startdate=startdate.substring(0, 4)+"-"+startdate.substring(4,6)+"-"+startdate.substring(6,8);
+			        	String starttime=startdatetimelist[1];
+			        	starttime=starttime.substring(0,2)+":"+starttime.substring(2,4)+":"+starttime.substring(4,6);
+			        	String startdatetime=startdate+"T"+starttime;
+			        	System.out.println(startdatetime);
+			        	
+			        	String [] enddatetimelist=e.getEnddate().split("T");
+			        	String enddate=enddatetimelist[0];
+			        	enddate=enddate.substring(0, 4)+"-"+enddate.substring(4,6)+"-"+enddate.substring(6,8);
+			        	String endtime=enddatetimelist[1];
+			        	endtime=endtime.substring(0,2)+":"+endtime.substring(2,4)+":"+endtime.substring(4,6);
+			        	String enddatetime=enddate+"T"+endtime;
+			        	System.out.println(enddatetime);
+			        	
+			        	String []calendardetails=e.getCalendar().split("`");
+			        	String calendarcolor="#"+calendardetails[1];
+			        	
+			        	System.out.println("check");
+			        	
+			        	 
+	        	if(e.getRepeatdatetimelist()!=null)
+	        	{
+	        		
+	        	      for(String str:e.getRepeatdatetimelist().getDateTime())
+	        	      {
+	        	    	    System.out.println(str);
+	        	    	  startdatetime=str;
+	        	    	  startdatetime=startdatetime.substring(0, 4)+"-"+startdatetime.substring(4,6)+"-"+startdatetime.substring(6,8)+"T"+startdatetime.substring(9,11)+":"+startdatetime.substring(11,13)+":"+startdatetime.substring(13,15);
+	        	    	  System.out.println(startdatetime); 
+	        	    	/*  SimpleDateFormat sdf=new SimpleDateFormat("yy-MM-ddTHH:mm:ss");
+	        	    	   sdf.format(new Date(startdate));
+	        	    	  System.out.println(startdatetime); */
+	        	    	  %>
+	        	    	  {
+	      					id: '<%=e.getUid()%>',
+	      					c:'<%=e.getUid()%>',
+	      					name:'<%=e.getCalendar()%>',
+	      					title: '<%=e.getSummary() %>',
+	      					start: '<%= startdatetime%>',
+	      					color: '<%=calendarcolor%>',   
+	      					 /*textColor: 'black' */
+	      				},
+	        	    	  <%
+	        	      }
+	 		    }	
+	        	else
+	        	{
+		        	
+	         %>
+		{
+			id: '<%=e.getUid()%>',
+			c:'<%=e.getUid()%>',
+			name:'<%=e.getCalendar()%>',
+			title: '<%=e.getSummary() %>',
+			start: '<%= startdatetime%>',
+			end:'<%=enddatetime %>',
+			 color: '<%=calendarcolor%>',   
+			 /*textColor: 'black' */
+		},
+		<% 			
+	        	}
+			         }
+			         %>
+				/*  {
+				    title: 'Long Event',
 					start: '2014-11-07',
 					end: '2014-11-10'
 				},
@@ -654,8 +726,12 @@
 					id: 999,
 					title: 'Repeating Event',
 					start: '2014-11-09T16:00:00'
-				},
-				{
+				},{
+					id: 999,
+					title: 'Repeating Event',
+					start: '2014-12-10T16:00:00'
+				}, */
+				/*{
 					id: 999,
 					title: 'Repeating Event',
 					start: '2014-11-16T16:00:00'
@@ -681,15 +757,15 @@
 				{
 					title: 'Happy Hour',
 					start: '2014-11-12T17:30:00'
-				},
-				{
+				}, */
+				/* {
 					title: 'Dinner',
 					start: '2014-11-12T20:00:00'
 				},
 				{
 					title: 'Birthday Party',
 					start: '2014-11-13T07:00:00'
-				},
+				}, */
 				{
 					title: 'Click for Google',
 					url: 'http://google.com/',
@@ -707,7 +783,7 @@
 <link href='css/fullcalendar.print.css' rel='stylesheet' media='print' />
 <script src='js/moment.min.js'></script> 
 <!--<script src='../lib/jquery.min.js'></script>---> 
-<script src='js/fullcalendar.min.js'></script>
+<script src='js/fullcalendar.js'></script>
 <!-----------/// COLOR PICKER STRED HERE ----------->
     <link rel="stylesheet" type="text/css" href="color_picker/spectrum.css">
     <script type="text/javascript" src="color_picker/spectrum.js"></script>
@@ -742,9 +818,12 @@
 <!-------------------//// NEW SPILITTER END HERE ---------------> 
 
 <!------------/// CREATE CALENDER POP STARED HERE ----------->
+
 <div class="calender_pop"> 
+<form id="eventform" commandName="eventform">
   <!--------/// HEADER STARED HERE ----------->
-  <div class="pop_header">Create event
+  <div class="pop_header">
+  <div id="editeventheader">Create event</div>
   
       <span>X</span>
   </div>
@@ -755,7 +834,7 @@
              <li class="gen_opt gen_active"><div class="gen_icon"></div>General options</li>
              <li class="repe"><div class="repe_icon"></div>Repeat</li>
              <li class="remind"><div class="reminder_icon"></div>Reminders</li>
-             <li class="work_g"><div class="working_icon"></div>Workgroup</li>
+             <li class="work_g"><div class="working_icon"></div>Invite Guest</li>
          </ul>
   
   
@@ -775,42 +854,122 @@
       <table>
         <tr>
           <td>Summary</td>
-          <td><input type="text" class="summary" /></td>
+          <td><input type="text" class="summary clear_data" id="summary" name="summary" /></td>
         </tr>
         <tr>
           <td>Location</td>
-          <td><input type="text" /></td>
+          <td><input type="text" id="location" name="location" class="clear_data"/></td>
         </tr>
         <tr>
           <td>Calendar</td>
-          <td><select>
-              <option>Nirbhay Singh calendar</option>
-              <option>JJJ</option>
-              <option>JJJ</option>
-              <option>JJJ</option>
-              <option>JJJ</option>
-              <option>JJJ</option>
-            </select></td>
+          <td><select id="calendar_select" name="calendar" class="clear_data">
+          <option value="Select Calendar">Select Calendar</option>
+          <%   
+            List <webmail.wsdl.File> calendarlist=(List <webmail.wsdl.File>)request.getAttribute("calendarfilelist");
+            for(File cl: calendarlist)
+            {  	            	
+            	String []filenamelist=cl.getFileName().split("`");
+            	String calendarfilename=filenamelist[0];                        	
+            %>
+              <option value="<%=cl.getFileName() %>"><%=calendarfilename %></option>
+              <%} %>
+              </select></td>
+        </tr>
+       <tr >
+                   <td>Privacy</td>
+                   <td>
+                              <select id="clazz" name="clazz" class="clear_data">
+                                    <option value="PUBLIC">Public</option>
+                                    <option value="PRIVATE">Private</option>
+                                    <option value="CONFIDENTIAL">Confidential</option>
+                              </select>
+                   </td>
+                </tr>
+                <tr>
+                   <td>Show this time as</td>
+                   <td>
+                            <select id="freebusy" class="clear_data" name="freebusy">
+                                  <option>Busy</option>
+                                  <option>Free</option>
+                            </select>
+                   
+                   </td>
         </tr>
         <tr>
           <td>Start date</td>
-          <td><input type="date" />
-            <input type="text" class="date_stared" /></td>
+          <td><input type="date" id="startdate" name="startdate" class="clear_data"/>
+            <input type="text" class="date_stared clear_data" placeholder="Show Time Here" id="starttime" /></td>
         </tr>
         <tr>
           <td>End date</td>
-          <td><input type="date" />
-            <input type="text" class="date_stared" /></td>
+          <td><input type="date" id="enddate" name="enddate" class="clear_data"/>
+            <input type="text" class="date_stared clear_data" placeholder="Show Time Here" id="endtime"/></td>
         </tr>
         <tr>
           <td>All day</td>
-          <td><input type="checkbox"/></td>
+          <td><input type="checkbox" id="allday" name="allday" class="clear_data"/></td>
         </tr>
         <tr>
           <td>Description</td>
-          <td><textarea></textarea></td>
+          <td><textarea id="description" name="description" class="clear_data"></textarea></td>
         </tr>
       </table>
+      
+         <div class="remi_date_opt">
+      
+                                    <div class="dymaic_am">
+  <div class="12a amvalue twitle_num">12:00am</div>
+  <div class="12.30a amvalue">12:30am</div>
+  <div class="1a amvalue" >1:00am</div>
+  <div class="1.30a amvalue" >1:30am</div>
+  <div class="2a amvalue" >2:00am</div>
+  <div class="2.3a amvalue" >2:30am</div>
+  <div class="3a amvalue" >3:00am</div>
+  <div class="3.3a amvalue" >3:30am</div>
+  <div class="4a amvalue" >4:00am</div>
+  <div class="4.3a amvalue" >4:30am</div>
+  <div class="5a amvalue" >5:00am</div>
+  <div class="5.30a amvalue" >5:30am</div>
+  <div class="6a amvalue" >6:00am</div>
+  <div class="6.30a amvalue" >6:30am</div>
+  <div class="7a amvalue" >7:00am</div>
+  <div class="7.30a amvalue" >7:30am</div>
+  <div class="8a amvalue" >8:00am</div>
+  <div class="8.3a amvalue" >8:30am</div>
+  <div class="9a amvalue" >9:00am</div>
+  <div class="9.3a amvalue" >9:30am</div>
+  <div class="10a amvalue" >10:00am</div>
+  <div class="10.3a amvalue" >10:30am</div>
+  <div class="11a amvalue" >11:00am</div>
+  <div class="11.3a amvalue" >11:30am</div>
+   <div class="12p amvalue" >12:00pm</div>
+  <div class="12.3p amvalue" >12:30pm</div>
+  <div class="1p amvalue" >1:00pm</div>
+  <div class="1.3p amvalue" >1:30pm</div>
+  <div class="2p amvalue" >2:00pm</div>
+  <div class="2.3p amvalue" >2:30pm</div>
+  <div class="3p amvalue" >3:00pm</div>
+  <div class="3.30p amvalue" >3:30pm</div>
+  <div class="4p amvalue" >4:00pm</div>
+  <div class="4.30p amvalue" >4:30pm</div>
+  <div class="5p amvalue" >5:00pm</div>
+  <div class="5.3p amvalue" >5:30pm</div>
+  <div class="6p amvalue" >6:00pm</div>
+  <div class="6.3p amvalue" >6:30pm</div>
+  <div class="7p amvalue" >7:00pm</div>
+  <div class="730p amvalue" >7:30pm</div>
+  <div class="8p amvalue" >8:00pm</div>
+  <div class="8.30p amvalue" >8:30pm</div>
+  <div class="9p amvalue" >9:00pm</div>
+  <div class="9.30p amvalue" >9:30pm</div>
+  <div class="10p amvalue" >10:00pm</div>
+  <div class="10.30p amvalue" >10:30pm</div>
+  <div class="11.p amvalue" >11:00pm</div>
+  <div class="11.30p amvalue" >11:30pm</div>
+</div>
+
+     
+                     </div>
       <div class="clear"></div>
     </div>
     <!------------//// POP CONTENT GENERAL OPTION END ---------> 
@@ -819,104 +978,238 @@
       <table>
         <tr>
           <td>Repeat</td>
-          <td><select>
+          <td><select id="frequency"  name="frequency" class="clear_data">
               <option >No repetitions</option>
-              <option >Daily</option>
-              <option >Weekly</option>
-              <option >Monthly</option>
-              <option >Yearly</option>
+              <option value="DAILY">Daily</option>
+              <option value="WEEKLY">Weekly</option>
+              <option value="MONTHLY">Monthly</option>
+              <option value="YEARLY">Yearly</option>
             </select></td>
         </tr>
         <tr>
           <td>Count</td>
-          <td><input type="text" /></td>
+          <td><input type="text" id="count" name="count" class="clear_data"/></td>
         </tr>
         <tr>
           <td>Until</td>
-          <td><input type="text" /></td>
+          <td><input type="date" id="until" name="until" /></td>
+          
         </tr>
       </table>
     </div>
     <!-----------/// REPEAT CONTENT END HERE ------> 
     <!-----------// REMINDER CAL STRED --------->
     <div class="reminder_cal">
-      <table>
+                       <table id="defaultremindertable" >
         <tr>
           <td colspan="2" class="new_line">This event has no configured reminders</td>
         </tr>
         <tr>
           <td colspan="2" class="new_line_1">New reminder:</td>
         </tr>
-        <tr>
+       <!--  <tr>
           <td><img src="images/new_reminder.png" /></td>
           <td >
-            <select >
-              <option >minutes</option>
-              <option >hours</option>
-              <option >days</option>
-              <option >weeks</option>
-            </select>
-            <select>
-              <option >before</option>
-              <option >after</option>
-            </select>
-            <select >
-              <option >start</option>
-              <option >end</option>
-            </select>
+            <select id="remindertype1"><option>Email</option><option>Pop-up</option></select>
+            <input type="text" class="reminder_time" id="remindertime1"/>
+            <select class="sel_remin_opt" id="reminderduration1"><option class="minutes">minutes</option><option class="hours">hours</option>
+            <option class="day">days</option><option class="week">weeks</option></select>
             </td>
-        </tr>
-        <tr>
-           <td colspan="2">New reminder:</td>
-        </tr>
-        <tr>
-            <td><img src="images/calender_new.png" /></td>
-            <td><input type="date"/> <input type="text" class="date_stared"/></td>
-        </tr>
+            <td class="delete_reminder"><img src="images/tool.png" /></td>
+        </tr> -->
+        <tr><td colspan="3"><span>Add New</span></td></tr> 
       </table>
+      <input type="hidden" id="counter" value="0" class="clear_data"/>
+      <input type="hidden" id="reminderdata" name="reminderdata" class="clear_data" />
+      <input type="hidden" id="uid" name="uid" class="clear_data"/>
+             <div class="append_reminder">
+                    <table class="new_reminder" >
+           
+                   </table>
+             </div>
+                        <div class="remi_date_opt">
+      
+                                    <div class="dymaic_am">
+  <div class="12a amvalue twitle_num">12:00am</div>
+  <div class="12.30a amvalue">12:30am</div>
+  <div class="1a amvalue" >1:00am</div>
+  <div class="1.30a amvalue" >1:30am</div>
+  <div class="2a amvalue" >2:00am</div>
+  <div class="2.3a amvalue" >2:30am</div>
+  <div class="3a amvalue" >3:00am</div>
+  <div class="3.3a amvalue" >3:30am</div>
+  <div class="4a amvalue" >4:00am</div>
+  <div class="4.3a amvalue" >4:30am</div>
+  <div class="5a amvalue" >5:00am</div>
+  <div class="5.30a amvalue" >5:30am</div>
+  <div class="6a amvalue" >6:00am</div>
+  <div class="6.30a amvalue" >6:30am</div>
+  <div class="7a amvalue" >7:00am</div>
+  <div class="7.30a amvalue" >7:30am</div>
+  <div class="8a amvalue" >8:00am</div>
+  <div class="8.3a amvalue" >8:30am</div>
+  <div class="9a amvalue" >9:00am</div>
+  <div class="9.3a amvalue" >9:30am</div>
+  <div class="10a amvalue" >10:00am</div>
+  <div class="10.3a amvalue" >10:30am</div>
+  <div class="11a amvalue" >11:00am</div>
+  <div class="11.3a amvalue" >11:30am</div>
+   <div class="12p amvalue" >12:00pm</div>
+  <div class="12.3p amvalue" >12:30pm</div>
+  <div class="1p amvalue" >1:00pm</div>
+  <div class="1.3p amvalue" >1:30pm</div>
+  <div class="2p amvalue" >2:00pm</div>
+  <div class="2.3p amvalue" >2:30pm</div>
+  <div class="3p amvalue" >3:00pm</div>
+  <div class="3.30p amvalue" >3:30pm</div>
+  <div class="4p amvalue" >4:00pm</div>
+  <div class="4.30p amvalue" >4:30pm</div>
+  <div class="5p amvalue" >5:00pm</div>
+  <div class="5.3p amvalue" >5:30pm</div>
+  <div class="6p amvalue" >6:00pm</div>
+  <div class="6.3p amvalue" >6:30pm</div>
+  <div class="7p amvalue" >7:00pm</div>
+  <div class="730p amvalue" >7:30pm</div>
+  <div class="8p amvalue" >8:00pm</div>
+  <div class="8.30p amvalue" >8:30pm</div>
+  <div class="9p amvalue" >9:00pm</div>
+  <div class="9.30p amvalue" >9:30pm</div>
+  <div class="10p amvalue" >10:00pm</div>
+  <div class="10.30p amvalue" >10:30pm</div>
+  <div class="11.p amvalue" >11:00pm</div>
+  <div class="11.30p amvalue" >11:30pm</div>
+</div>
+
+     
+                     </div>
+      
+      <div class="clear"></div>
     </div>
     <!-----------/// REMINDER CAL END HERE ------->
     <!-----------//// WORKGROUP CAL ------------>
     <div class="workgroup_cal">
              <table>
                 <tr >
-                   <td>Privacy</td>
-                   <td>
-                              <select>
-                                    <option>Public</option>
-                                    <option>Private</option>
-                                    <option>Confidential</option>
-                              </select>
+                   <td>Add Guest </td>
+                   <td colspan="2">
+                            <input type="text" class="add_guest_name" class="clear_data" />
                    </td>
-                </tr>
-                <tr>
-                   <td>Show this time as</td>
-                   <td>
-                            <select>
-                                  <option>Busy</option>
-                                  <option>Free</option>
-                            </select>
+                    <td colspan="3" >
+                           <div class="add_guest" >Add</div>
                    
                    </td>
                 </tr>
-                <tr>
-                   <td></td>
-                   <td></td>
+                
+                </table>
+           <div class="add_guest_content">
+                <table class="heading_guest">
+                <tr class="add_name">
+                   <td ><input type="checkbox" class="select_guest"  /> <span>Name Here</span></td>
+                   <td><span><img src="images/cont_imag.png"/>Email Guest</span><div class="close_guest_1"><img src="images/tool.png" /></div></td>
                 </tr>
-             </table>
+                </table>
+                     <div class="guest_content_11">
+                              <table class="append_guest">
+                                      <tr class="add_name row_guest">
+                                         <td colspan="2" ><input type="checkbox" class="select_guest_1" /> <span>Test Name Here</span></td>
+                                         <td><div class="close_guest"><img src="images/tool.png" /></div></td>
+                                      </tr>
+                           </table>
+                     </div>
+             </div>
     
     
     </div>
     <!------------/// WORKGROUP CAL END HERE ------->
     <div class="clear"></div>
-    <div class="save_cal">Save</div>
+    <div class="save_cal" onclick="saveEvent()">Save</div>
     <div class="cancel_cal">Cancel</div>
     <div class="clear"></div>
   </div>
   <!-------------/// POPUP CREATE CONTENT BOX END HERE ------------> 
-  
+ </form> 
 </div>
+<script type="text/javascript">
+function saveEvent()
+{
+	setreminder();
+	var eventdetails= $("#eventform").serialize();
+	alert("received");
+	
+	$.ajax({
+        type:"get",
+        data:eventdetails,
+        url:"createEvent",
+        async:true,
+        dataType: "json",
+        success: function(data){
+        	 alert(data);
+        	
+        	 var filename=data.name.split("`");
+        	
+        	 alert(data.repeatdates);
+        	 if(data.c!="")
+        		 {
+             	 $("."+data.id).parent().parent().remove();
+             	
+        		 }
+             	 var eventData=null;
+        	 	 if(Object.keys(data.repeatdates).length!=0)
+        		 {
+        		 for(j=0;j<Object.keys(data.repeatdates).length;j++)
+        			 {
+        			       			 
+        			 eventData = {
+            			     id:data.id ,
+            			     c:data.id,
+            				 name:data.name ,
+    						title: data.summary,
+    						start:data.repeatdates[Object.keys(data.repeatdates)[j]],
+    						color:"#"+filename[1]
+    					    };
+        			 $('#calendar').fullCalendar('renderEvent', eventData, true);
+        			 }
+        		 }
+        	 else
+        		 {
+        		 alert(data.repeatdates);
+        	  eventData = {
+        			     id:data.id ,
+        			     c:data.id,
+        				 name:data.name ,
+						title: data.summary,
+						start: data.start,
+						end :data.end,
+						color:"#"+filename[1]
+					    };
+        	  $('#calendar').fullCalendar('renderEvent', eventData, true);
+        		 }
+                      
+        }
+    });
+		 $('.clear_data').val("");
+		 $('#defaultremindertable').html('<table ><tbody><tr><td colspan="2" class="new_line">This event has no configured reminders</td></tr><tr><td colspan="2" class="new_line_1">New reminder:</td></tr><tr><td colspan="3"><span>Add New</span></td></tr></tbody></table>');
+		 $('.new_reminder').html("");
+		 $('.calender_pop').hide(500);
+		  $('.web_dialog_overlay').hide();
+}
+function setreminder()
+{
+	reminderdata="";
+	var loopterminator=$('#counter').val().split(",");
+	alert(loopterminator);
+	 for(j=0;j<loopterminator.length;j++)
+		{
+		   if($('#remindertime'+loopterminator[j]).val()!=undefined)
+			reminderdata=reminderdata+$('#remindertype'+loopterminator[j]).val()+"`"+$('#remindertime'+loopterminator[j]).val()+"`"+$('#reminderduration'+loopterminator[j]).val()+";";
 
+		} 
+	alert(reminderdata);
+	$('#reminderdata').val(reminderdata);
+
+	alert($('#reminderdata').val());
+	}
+</script>
 <!---------//// CREATE THE CALENDER STRED HERE --------------->
 <div class="create_cal">
 <!---/// HEADER ----->
@@ -925,20 +1218,34 @@
 <!----/// CONTENT STRED HERE ------>
 <div class="inn_con_cal">
 
-  <table>
-     <tr>
+        <table>
+     <tbody><tr>
           <td>Display Name</td>
-           <td><input type="text" class="dis_name" /></td>
+           <td><input type="text" class="dis_name clear_data" id="calendarname" ></td>
      </tr>
      <tr>
           <td>Display Color</td>
-           <td><input type='text' id='custom' /></td>
+           <td class="new_cal_color clear_data" ><div class="color_1 color_find" ><span> &#x2713 </span></div>
+                         <div class="color_2 color_find" > <span> &#x2713 </span></div>
+                         <div class="color_3 color_find" ><span> &#x2713 </span></div>
+                         <div class="color_4 color_find" > <span> &#x2713 </span></div>
+                         <div class="color_5 color_find" > <span> &#x2713 </span></div>
+                         <div class="color_6 color_find" > <span> &#x2713 </span></div>
+                         <div class="clear"></div>
+                         <div class="color_7 color_find" > <span> &#x2713 </span></div>
+                         <div class="color_8 color_find"> <span> &#x2713 </span></div>
+                         <div class="color_9 color_find" > <span> &#x2713 </span></div>
+                         <div class="color_10 color_find" > <span> &#x2713 </span></div>
+                         <div class="color_11 color_find"> <span> &#x2713 </span></div>
+                         <div class="color_12 color_find" > <span> &#x2713 </span></div></td>
      </tr>
-  </table>
+  </tbody></table>
+   <input type="hidden" id="calendarcolor" class="clear_data"/>      
+
 
 </div>
   <div class="clear"></div>
-    <div class="save_cal_1">Save</div>
+    <div class="save_cal_1" onclick="saveCalendar()">Save</div>
     <div class="cancel_cal_1">Cancel</div>
     <div class="clear"></div>
 
@@ -947,10 +1254,55 @@
 
 </div>
 
+<script type="text/javascript">
+function saveCalendar()
+{
+	
+	var calid=$('#calendarname').val();
+	var color=$('#calendarcolor').val();
+	
+	alert(calid);
+	 alert(color);
+	 jQuery.get("createCalendar",
+			{
+		     "calendarid":calid,
+		      "calcolor":color
+			},
+			function(data)
+			{
+				alert(data);
+				if(data!=null && data!="")
+				{	
+			      var cre_cal_nam = $('#calendarname').val();
+			      alert(cre_cal_nam);
+			      alert("hello");
+				   $('.my_calender_content >ul').append('<li id="'+data+'"><div class="color_calender" style="background-color:'+ color +';"></div><span>'+ cre_cal_nam +'</span style="color: black;"></span><div class="cal_option"><img src="images/cal-open.png"></div><div class="clear"></div></li>');
+
+				      alert("hello");
+				   $("#calendar_select").append('<option value="'+data+'">'+cre_cal_nam+'</option>');
+					 
+				}		
+				 $('.web_dialog_overlay').hide();
+				 $('.create_cal').hide();
+				 $('.clear_data').val("");
+				  $('span.select_color').removeClass('select_color');
+					  
+				}
+			); 	 
+	// $('.clear_data').val("");
+	
+
+	}
+	/* function getcalendarcolor()
+	{alert("hello");
+	alert($(this).css("background-color"));
+		 var calendarcolor=this.css("background");
+		 alert(calendarcolor);
+	} */
+</script>
+
 <!-----------/// CREATE THE CALENDER END HERE ---------------->
   <div class="web_dialog_overlay"></div>
 <!------------/// CREATE CALENDER POP END HERE -------------->
-
-
 </body>
 </html>

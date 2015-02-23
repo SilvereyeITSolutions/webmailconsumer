@@ -18,6 +18,7 @@
 <!------/// SCRIPT FOR CALENDER---------->  
 <script src="js/calender_js.js"></script>
 <link type="text/css" rel="stylesheet" href="css/calender_css.css" />
+<link type="text/css" rel="stylesheet" href="css/calender_update.css" />
 <!---------/// SCRIPT END ----------------->
 
 <style>
@@ -88,9 +89,21 @@ function changeHBG(nm) {
 	$(".ui-widget-header").css("background-color",nm);
 }
 </script>
+<!--  <script type="text/javascript">
+  $(document).ready(function(){
+	   alert("hello");
+    	jQuery.get("getcalendarlist",
+    			{
+       			},
+    			function(data)
+    			{
+    				alert(data);
+    			}
+    			);  
+      });    </script> -->
 
 </head>
-    <body > 
+    <body> 
     
     
     

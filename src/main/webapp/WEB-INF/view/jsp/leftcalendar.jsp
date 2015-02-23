@@ -1,8 +1,9 @@
+<%@page import="java.util.List"%>
+<%@page import="webmail.wsdl.File"%>
 <html>
-    <head>
-    
-    </head>
-    <body>
+    <head>   
+      </head>
+    <body >             
              <div class="left-pane" id="MySplitter"> 
     
     <!--------------///// WHEN LEFT IS OPEN STARED HERE ----->
@@ -24,85 +25,21 @@
           <div class="my_claender">My calendars</div>
           <div class="my_calender_content">
             <ul>
-              <li>
-                <div class="color_calender"></div>
-                <span>Hariom Srivastava</span>
+            <%   
+            List <webmail.wsdl.File> calendarlist=(List <webmail.wsdl.File>)request.getAttribute("calendarfilelist");
+            for(File cl: calendarlist)
+            {  	            	
+            	String []filenamelist=cl.getFileName().split("`");
+            	String calendarfilename=filenamelist[0];
+            	String calendarfilecolor="#"+filenamelist[1];            	
+            %>
+              <li id="<%=cl.getFileName()%>">
+                <div class="color_calender" style="background-color: <%=calendarfilecolor%>"></div>
+                <span style="color: black;"><%=calendarfilename %></span>
                 <div class="cal_option"><img src="images/cal-open.png" /></div>
                 <div class="clear"></div>
               </li>
-              <li>
-                <div class="color_calender"></div>
-                <span>Hariom Srivastava</span>
-                <div class="cal_option"><img src="images/cal-open.png" /></div>
-                <div class="clear"></div>
-              </li>
-              <li>
-                <div class="color_calender"></div>
-                <span>Hariom Srivastava</span>
-                <div class="cal_option"><img src="images/cal-open.png" /></div>
-                <div class="clear"></div>
-              </li>
-              <li>
-                <div class="color_calender"></div>
-                <span>Hariom Srivastava</span>
-                <div class="cal_option"><img src="images/cal-open.png" /></div>
-                <div class="clear"></div>
-              </li>
-              <li>
-                <div class="color_calender"></div>
-                <span>Hariom Srivastava</span>
-                <div class="clear"></div>
-              </li>
-              <li>
-                <div class="color_calender"></div>
-                <span>Hariom Srivastava</span>
-                <div class="clear"></div>
-              </li>
-              <li>
-                <div class="color_calender"></div>
-                <span>Hariom Srivastava</span>
-                <div class="clear"></div>
-              </li>
-              <li>
-                <div class="color_calender"></div>
-                <span>Hariom Srivastava</span>
-                <div class="clear"></div>
-              </li>
-              <li>
-                <div class="color_calender"></div>
-                <span>Hariom Srivastava</span>
-                <div class="clear"></div>
-              </li>
-              <li>
-                <div class="color_calender"></div>
-                <span>Hariom Srivastava</span>
-                <div class="clear"></div>
-              </li>
-              <li>
-                <div class="color_calender"></div>
-                <span>Hariom Srivastava</span>
-                <div class="clear"></div>
-              </li>
-              <li>
-                <div class="color_calender"></div>
-                <span>Hariom Srivastava</span>
-                <div class="clear"></div>
-              </li>
-              <li>
-                <div class="color_calender"></div>
-                <span>Hariom Srivastava</span>
-                <div class="clear"></div>
-              </li>
-              <li>
-                <div class="color_calender"></div>
-                <span>Hariom Srivastava</span>
-                <div class="clear"></div>
-              </li>
-              <li>
-                <div class="color_calender"></div>
-                <span>Hariom Srivastava</span>
-                <div class="clear"></div>
-              </li>
+            <%} %>  
             </ul>
              <!------/// CALENDER MORE OPTION ------->
                 <div class="calender_option">
@@ -130,74 +67,6 @@
                 <div class="color_calender"></div>
                 <span>Hariom Srivastava</span>
                 <div class="other_cal_option"><img src="images/cal-open.png" /></div>
-                <div class="clear"></div>
-              </li>
-              <li>
-                <div class="color_calender"></div>
-                <span>Hariom Srivastava</span>
-                <div class="other_cal_option"><img src="images/cal-open.png" /></div>
-                <div class="clear"></div>
-              </li>
-              <li>
-                <div class="color_calender"></div>
-                <span>Hariom Srivastava</span>
-                <div class="other_cal_option"><img src="images/cal-open.png" /></div>
-                <div class="clear"></div>
-              </li>
-              <li>
-                <div class="color_calender"></div>
-                <span>Hariom Srivastava</span>
-                <div class="other_cal_option"><img src="images/cal-open.png" /></div>
-                <div class="clear"></div>
-              </li>
-              <li>
-                <div class="color_calender"></div>
-                <span>Hariom Srivastava</span>
-                <div class="clear"></div>
-              </li>
-              <li>
-                <div class="color_calender"></div>
-                <span>Hariom Srivastava</span>
-                <div class="clear"></div>
-              </li>
-              <li>
-                <div class="color_calender"></div>
-                <span>Hariom Srivastava</span>
-                <div class="clear"></div>
-              </li>
-              <li>
-                <div class="color_calender"></div>
-                <span>Hariom Srivastava</span>
-                <div class="clear"></div>
-              </li>
-              <li>
-                <div class="color_calender"></div>
-                <span>Hariom Srivastava</span>
-                <div class="clear"></div>
-              </li>
-              <li>
-                <div class="color_calender"></div>
-                <span>Hariom Srivastava</span>
-                <div class="clear"></div>
-              </li>
-              <li>
-                <div class="color_calender"></div>
-                <span>Hariom Srivastava</span>
-                <div class="clear"></div>
-              </li>
-              <li>
-                <div class="color_calender"></div>
-                <span>Hariom Srivastava</span>
-                <div class="clear"></div>
-              </li>
-              <li>
-                <div class="color_calender"></div>
-                <span>Hariom Srivastava</span>
-                <div class="clear"></div>
-              </li>
-              <li>
-                <div class="color_calender"></div>
-                <span>Hariom Srivastava</span>
                 <div class="clear"></div>
               </li>
               <li>
